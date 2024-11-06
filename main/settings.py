@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,21 +31,30 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+COMPONENTS_APPS = [
     'apps.areas',
     'apps.companies',
     'apps.categories',
     'apps.information',
     'apps.contact',
     'apps.languages',
+    'apps.images_projects',
     'apps.projects',
 ]
+
+DEPENDENCY_APPS = [
+    'rest_framework',
+    'coreapi',
+]
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles'
+] + COMPONENTS_APPS + DEPENDENCY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,3 +138,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',
+}
+
+
+# Ruta donde se almacenarán los archivos subidos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL a la que se accederán los archivos subidos
+MEDIA_URL = '/media/'
