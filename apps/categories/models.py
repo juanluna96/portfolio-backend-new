@@ -1,6 +1,8 @@
 from django.db import models
 
 from apps.areas.models import Area
+from apps.languages.models import Language
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Category(models.Model):
@@ -19,3 +21,24 @@ class Category(models.Model):
         
     def __str__(self):
         return self.name
+    
+# Nuevo modelo para la descripción de la categoría en distintos idiomas
+class CategoryDescription(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='descriptions')
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    description = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('category', 'language')
+        verbose_name = 'Category Description'
+        verbose_name_plural = 'Category Descriptions'
+        
+    def clean(self):
+        if CategoryDescription.objects.filter(category=self.category, language=self.language).exists():
+            raise ValidationError("This category already has a description in this language.")
+
+    def __str__(self):
+        return f"{self.category.name} - {self.language.name}"

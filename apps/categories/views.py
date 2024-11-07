@@ -26,3 +26,29 @@ class CategoryListByLanguage(APIView):
         # Serializamos las categorías y las devolvemos
         serializer = CategorySerializer(categories_with_projects, many=True)
         return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
+
+class CategoriesDescriptionWithAllLanguages(APIView):
+    def get(self, request, *args, **kwargs):
+        # Obtén el idioma actual
+        locale = request.query_params.get('language', None)
+
+        if locale is None:
+            return Response({"detail": "Language not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        language = Language.objects.filter(abbreviation=locale).first()
+        
+        # Obtener todas las categorías con las descripciones en el idioma actual
+        categories = Category.objects.all().prefetch_related('descriptions__language')
+
+        # Filtramos las categorías que tienen descripciones en el idioma solicitado
+        filtered_categories = []
+        for category in categories:
+            category_description = category.descriptions.filter(language=language).first()
+            if category_description:
+                category.description_in_current_language = category_description.description
+                filtered_categories.append(category)
+
+        # Serializamos las categorías
+        serializer = CategorySerializer(filtered_categories, many=True, context={'language_code': locale})
+
+        return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
