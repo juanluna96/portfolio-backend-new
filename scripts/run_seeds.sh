@@ -7,9 +7,14 @@ echo "Cargando fixtures..."
 python manage.py seed_areas
 echo "Áreas cargadas con éxito."
 
+python manage.py seed_languages
+echo "Idiomas cargados con éxito."
+
 python manage.py seed_categories
 echo "Categorías cargadas con éxito."
 
+python manage.py seed_category_descriptions
+echo "Descripciones de categorías cargadas con éxito."
 
 python manage.py seed_companies
 echo "Empresas cargadas con éxito."
