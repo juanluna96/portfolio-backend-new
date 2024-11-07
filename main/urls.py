@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.contact.urls')),
     path('api/', include('apps.categories.urls')),
+    path('api/', include('apps.languages.urls')),
     # Dependency apps go here
     path('api/docs/', include_docs_urls(title='Portfolio API')),
 ]

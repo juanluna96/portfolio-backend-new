@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from apps.categories.models import Category
 from apps.languages.models import Language
-from apps.categories.serializer import CategorySerializer
+from apps.categories.serializer import CategorySerializer, ProjectSerializer
+from rest_framework.pagination import PageNumberPagination
 
 class CategoryListByLanguage(APIView):
     def get(self, request, *args, **kwargs):
@@ -52,3 +53,34 @@ class CategoriesDescriptionWithAllLanguages(APIView):
         serializer = CategorySerializer(filtered_categories, many=True, context={'language_code': locale})
 
         return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
+
+class CategoryProjectsView(APIView):
+    def get(self, request, *args, **kwargs):
+        # Obtener parámetros de la query
+        locale = request.query_params.get('language', None)
+        category_name = request.query_params.get('category', None)
+
+        if not locale or not category_name:
+            return Response({"detail": "Both 'language' and 'category' parameters are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Obtener el lenguaje y la categoría
+        try:
+            language = Language.objects.get(abbreviation=locale)
+            category = Category.objects.get(name=category_name)
+        except Language.DoesNotExist:
+            return Response({"detail": "Language not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Category.DoesNotExist:
+            return Response({"detail": "Category not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Filtrar proyectos relacionados con la categoría y el lenguaje especificado
+        projects = category.project_set.filter(language=language)
+
+        # Configurar paginación
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(projects, request)
+
+        # Serializar los proyectos
+        serializer = ProjectSerializer(result_page, many=True, context={'request': request})
+
+        return paginator.get_paginated_response({"category": category.name, "projects": serializer.data})
