@@ -25,5 +25,8 @@ echo "Imágenes de proyectos eliminadas con éxito."
 python manage.py delete_projects
 echo "Proyectos eliminados con éxito."
 
+python manage.py delete_project_descriptions
+echo "Descripciones de proyectos eliminadas con éxito."
+
 echo "Todos los fixtures han sido eliminados con éxito."
 

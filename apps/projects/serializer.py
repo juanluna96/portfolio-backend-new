@@ -1,6 +1,13 @@
 from rest_framework import serializers
 from apps.images_projects.models import ImageProject
-from apps.projects.models import Project
+from apps.projects.models import Project, ProjectDescription
+
+class ProjectDescriptionSerializer(serializers.ModelSerializer):
+    language = serializers.CharField(source='language.name')
+    
+    class Meta:
+        model = ProjectDescription
+        fields = ['language', 'description']
 class ProjectSerializer(serializers.ModelSerializer):
     language = serializers.StringRelatedField()  # Muestra el nombre del lenguaje como un campo
     images = serializers.StringRelatedField(many=True)

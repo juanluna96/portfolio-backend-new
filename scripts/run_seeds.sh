@@ -25,5 +25,8 @@ echo "Imágenes de proyectos cargadas con éxito."
 python manage.py seed_projects
 echo "Proyectos cargados con éxito."
 
+python manage.py seed_project_descriptions
+echo "Descripciones de proyectos cargadas con éxito."
+
 echo "Todos los fixtures han sido cargados con éxito."
 
