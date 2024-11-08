@@ -2,11 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from apps.categories.models import Category
+from apps.categories.schemas import CategoriesDescriptionWithAllLanguagesSchema, CategoryListByLanguageSchema, CategoryProjectsViewSchema
 from apps.languages.models import Language
 from apps.categories.serializer import CategorySerializer, ProjectSerializer
 from rest_framework.pagination import PageNumberPagination
 
 class CategoryListByLanguage(APIView):
+    schema = CategoryListByLanguageSchema()
     def get(self, request, *args, **kwargs):
         locale = request.query_params.get('language', None)
         
@@ -29,6 +31,7 @@ class CategoryListByLanguage(APIView):
         return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
 
 class CategoriesDescriptionWithAllLanguages(APIView):
+    schema = CategoriesDescriptionWithAllLanguagesSchema()
     def get(self, request, *args, **kwargs):
         # Obtén el idioma actual
         locale = request.query_params.get('language', None)
@@ -76,6 +79,7 @@ class CategoriesDescriptionWithAllLanguages(APIView):
         return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
 
 class CategoryProjectsView(APIView):
+    schema = CategoryProjectsViewSchema()
     def get(self, request, *args, **kwargs):
         # Obtener parámetros de la query
         locale = request.query_params.get('language', None)
