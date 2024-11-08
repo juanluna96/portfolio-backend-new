@@ -52,6 +52,7 @@ COMPONENTS_APPS = [
 DEPENDENCY_APPS = [
     'rest_framework',
     'coreapi',
+    'corsheaders'
 ]
 
 INSTALLED_APPS = [
@@ -64,6 +65,7 @@ INSTALLED_APPS = [
 ] + COMPONENTS_APPS + DEPENDENCY_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,3 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # URL a la que se accederán los archivos subidos
 MEDIA_URL = '/media/'
+
+CORS_ALLOWED_ORIGINS = [
+    os.getenv('ALLOWED_HOSTS')
+]
