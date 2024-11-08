@@ -19,6 +19,9 @@ echo "Descripciones de categorías eliminadas con éxito."
 python manage.py delete_companies
 echo "Empresas eliminadas con éxito."
 
+python manage.py delete_biography
+echo "Biografías eliminadas con éxito."
+
 python manage.py delete_images_projects
 echo "Imágenes de proyectos eliminadas con éxito."
 

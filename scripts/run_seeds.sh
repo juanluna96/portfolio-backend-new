@@ -19,6 +19,9 @@ echo "Descripciones de categorías cargadas con éxito."
 python manage.py seed_companies
 echo "Empresas cargadas con éxito."
 
+python manage.py seed_biography
+echo "Biografías cargadas con éxito."
+
 python manage.py seed_images_projects
 echo "Imágenes de proyectos cargadas con éxito."
 
