@@ -3,9 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from apps.languages.models import Language
 from apps.projects.models import Project
+from apps.projects.schemas import ProjectListSchema
 from apps.projects.serializer import ProjectSerializer
+from django.db.models import Q
 
 class ProjectListView(APIView):
+    schema = ProjectListSchema()
     def get(self, request, *args, **kwargs):
         locale = request.query_params.get('language', None)
         search = request.query_params.get('search', '')
@@ -21,9 +24,9 @@ class ProjectListView(APIView):
 
         if search:
             projects_query = projects_query.filter(
-                models.Q(descriptions__description__icontains=search) |
-                models.Q(title__icontains=search)
-            )
+                Q(descriptions__description__icontains=search) |
+                Q(title__icontains=search)
+            ).distinct()
 
         # Ordenar por título, por defecto ascendente
         order_field = 'title' if order == 'asc' else '-title'
