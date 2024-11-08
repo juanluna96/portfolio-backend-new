@@ -33,5 +33,5 @@ class ProjectListView(APIView):
         projects_query = projects_query.order_by(order_field)
 
         # Serializa y devuelve los proyectos
-        serializer = ProjectSerializer(projects_query, many=True)
+        serializer = ProjectSerializer(projects_query, many=True, context={'request': request})
         return Response({'projects': serializer.data}, status=status.HTTP_200_OK)
