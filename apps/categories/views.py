@@ -38,6 +38,27 @@ class CategoriesDescriptionWithAllLanguages(APIView):
         
         language = Language.objects.filter(abbreviation=locale).first()
         
+        if not language:
+            return Response({"detail": "Invalid language specified"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Obtén el parámetro de categoría si está presente
+        category_param = request.query_params.get('category', None)
+
+        if category_param:
+            # Filtra por una categoría específica si se pasa el parámetro
+            category = Category.objects.filter(id=category_param).prefetch_related('descriptions__language').first()
+            if not category:
+                return Response({"detail": "Category not found"}, status=status.HTTP_404_NOT_FOUND)
+            
+            # Verifica si la categoría tiene una descripción en el idioma actual
+            category_description = category.descriptions.filter(language=language).first()
+            if category_description:
+                category.description_in_current_language = category_description.description
+                serializer = CategorySerializer(category, context={'language_code': locale})
+                return Response({"category": serializer.data}, status=status.HTTP_200_OK)
+            else:
+                return Response({"detail": "Category description not found for the specified language"}, status=status.HTTP_404_NOT_FOUND)
+
         # Obtener todas las categorías con las descripciones en el idioma actual
         categories = Category.objects.all().prefetch_related('descriptions__language')
 

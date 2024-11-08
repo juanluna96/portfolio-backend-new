@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/', include('apps.categories.urls')),
     path('api/', include('apps.languages.urls')),
     path('api/',include('apps.information.urls')),
+    path('api/', include('apps.projects.urls')),
     # Dependency apps go here
     path('api/docs/', include_docs_urls(title='Portfolio API')),
 ]
