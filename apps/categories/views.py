@@ -98,7 +98,7 @@ class CategoryProjectsView(APIView):
             return Response({"detail": "Category not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Filtrar proyectos relacionados con la categoría y el lenguaje especificado
-        projects = category.project_set.filter(language=language)
+        projects = category.projects.filter(language=language)
 
         # Configurar paginación
         paginator = PageNumberPagination()

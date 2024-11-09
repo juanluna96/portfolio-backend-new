@@ -9,7 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'updated_at')
     
     def get_related_projects(self, obj):
-        related_projects = obj.project_set.all()
+        related_projects = obj.projects.all()
         return ", ".join([project.title for project in related_projects])
     
     get_related_projects.short_description = 'Proyectos relacionados'
