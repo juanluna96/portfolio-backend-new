@@ -7,9 +7,11 @@ from rest_framework import status
 # Create your views here.
 class AreaWithCategoriesProjectsView(APIView):
     def get(self, request, *args, **kwargs):
-        areas = Area.objects.prefetch_related('categories__project_set').all()  # Usamos prefetch_related para obtener las categorías con sus proyectos
+        language_code = request.query_params.get('language', 'en')
 
-        # Serializamos las áreas con categorías y proyectos
-        serializer = AreaSerializer(areas, many=True)
+        areas = Area.objects.prefetch_related('categories__project_set').all()
+
+        # Serializamos las áreas, pasándole el 'language_code' al contexto de los serializers
+        serializer = AreaSerializer(areas, many=True, context={'language_code': language_code})
 
         return Response({"areas": serializer.data}, status=status.HTTP_200_OK)

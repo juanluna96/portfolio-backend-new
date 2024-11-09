@@ -22,7 +22,7 @@ class Project(models.Model):
     # Company is a field that connects to company information
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     # Categories is a field that connects to category information
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, related_name='projects')
     # Languages is a field that connects to language information
     language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True, blank=True)
     # Images

@@ -9,9 +9,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Obtener las áreas existentes
-        frontend_area = Area.objects.get(title="Frontend")
-        backend_area = Area.objects.get(title="Backend")
-        database_area = Area.objects.get(title="Database")
+        frontend_area = Area.objects.filter(title="Frontend").first()
+        backend_area = Area.objects.filter(title="Backend").first()
+        database_area = Area.objects.filter(title="Database").first()
 
         categories = [
             # Frontend
