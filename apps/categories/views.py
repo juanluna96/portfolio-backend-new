@@ -2,13 +2,26 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from apps.categories.models import Category
-from apps.categories.schemas import CategoriesDescriptionWithAllLanguagesSchema, CategoryListByLanguageSchema, CategoryProjectsViewSchema
+from apps.categories.pagination import CustomPagination
 from apps.languages.models import Language
 from apps.categories.serializer import CategorySerializer, ProjectSerializer
 from rest_framework.pagination import PageNumberPagination
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from apps.categories.schemas import (
+    category_list_by_language_params,
+    categories_description_with_all_languages_params,
+    category_projects_view_params,
+)
+
 class CategoryListByLanguage(APIView):
-    schema = CategoryListByLanguageSchema()
+
+    @swagger_auto_schema(manual_parameters=category_list_by_language_params, responses={
+        200: openapi.Response('Success', CategorySerializer(many=True)),
+        400: 'Language parameter is required',
+        404: 'Language not found'
+    })
     def get(self, request, *args, **kwargs):
         locale = request.query_params.get('language', None)
         
@@ -23,15 +36,19 @@ class CategoryListByLanguage(APIView):
         
         # Obtener todas las categorías que tienen proyectos con el lenguaje especificado
         categories_with_projects = Category.objects.filter(
-            project__language=language
+            projects__language=language
         ).distinct()
 
         # Serializamos las categorías y las devolvemos
-        serializer = CategorySerializer(categories_with_projects, many=True)
+        serializer = CategorySerializer(categories_with_projects, many=True, context={'request': request})
         return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
 
 class CategoriesDescriptionWithAllLanguages(APIView):
-    schema = CategoriesDescriptionWithAllLanguagesSchema()
+    
+    @swagger_auto_schema(manual_parameters=categories_description_with_all_languages_params, responses={
+        200: openapi.Response('Success', CategorySerializer()),
+        404: 'Language not found or invalid language specified'
+    })
     def get(self, request, *args, **kwargs):
         # Obtén el idioma actual
         locale = request.query_params.get('language', None)
@@ -57,7 +74,7 @@ class CategoriesDescriptionWithAllLanguages(APIView):
             category_description = category.descriptions.filter(language=language).first()
             if category_description:
                 category.description_in_current_language = category_description.description
-                serializer = CategorySerializer(category, context={'language_code': locale})
+                serializer = CategorySerializer(category, context={'language_code': locale, 'request': request})
                 return Response({"category": serializer.data}, status=status.HTTP_200_OK)
             else:
                 return Response({"detail": "Category description not found for the specified language"}, status=status.HTTP_404_NOT_FOUND)
@@ -74,35 +91,35 @@ class CategoriesDescriptionWithAllLanguages(APIView):
                 filtered_categories.append(category)
 
         # Serializamos las categorías
-        serializer = CategorySerializer(filtered_categories, many=True, context={'language_code': locale})
+        serializer = CategorySerializer(filtered_categories, many=True, context={'language_code': locale, 'request': request})
 
         return Response({"categories": serializer.data}, status=status.HTTP_200_OK)
-
+    
 class CategoryProjectsView(APIView):
-    schema = CategoryProjectsViewSchema()
+    
+    @swagger_auto_schema(manual_parameters=category_projects_view_params)
     def get(self, request, *args, **kwargs):
         # Obtener parámetros de la query
         locale = request.query_params.get('language', None)
-        category_name = request.query_params.get('category', None)
+        category = request.query_params.get('category', None)
 
-        if not locale or not category_name:
+        if not locale or not category:
             return Response({"detail": "Both 'language' and 'category' parameters are required"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Obtener el lenguaje y la categoría
         try:
             language = Language.objects.get(abbreviation=locale)
-            category = Category.objects.get(name=category_name)
+            category = Category.objects.get(id=category) if category.isdigit() else Category.objects.get(name__iexact=category)
         except Language.DoesNotExist:
             return Response({"detail": "Language not found"}, status=status.HTTP_404_NOT_FOUND)
         except Category.DoesNotExist:
             return Response({"detail": "Category not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Filtrar proyectos relacionados con la categoría y el lenguaje especificado
-        projects = category.projects.filter(language=language)
+        projects = category.projects.filter(language__abbreviation=language.abbreviation)
 
         # Configurar paginación
-        paginator = PageNumberPagination()
-        paginator.page_size = 8
+        paginator = CustomPagination()
         result_page = paginator.paginate_queryset(projects, request)
 
         # Serializar los proyectos

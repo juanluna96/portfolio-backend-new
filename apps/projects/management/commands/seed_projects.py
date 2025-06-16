@@ -1,3 +1,5 @@
+import json
+import os
 import random
 from django.core.management.base import BaseCommand
 from apps.companies.models import Company
@@ -5,41 +7,69 @@ from apps.categories.models import Category
 from apps.languages.models import Language
 from apps.images_projects.models import ImageProject
 from apps.projects.models import Project
+from main import settings
 
 class Command(BaseCommand):
-    help = 'Seed the Project table with sample data'
+    help = 'Seed the Project table with data from JSON file'
 
     def handle(self, *args, **options):
+        # Ruta al archivo JSON
+        json_path =  os.path.join(settings.BASE_DIR, 'apps', 'projects', 'management', 'commands', 'jsons', 'projects.json')
+        
+        # Verificar si el archivo existe
+        if not os.path.exists(json_path):
+            self.stdout.write(self.style.ERROR(f'El archivo "{json_path}" no existe.'))
+            return
+
+        # Cargar datos desde el archivo JSON
+        with open(json_path, 'r', encoding='utf-8') as file:
+            projects_data = json.load(file)
+
         # Eliminar todos los proyectos existentes
         self.stdout.write(self.style.WARNING('Eliminando todos los proyectos existentes...'))
         Project.objects.all().delete()
         self.stdout.write(self.style.SUCCESS('Todos los proyectos han sido eliminados.'))
 
-        # Obtener instancias existentes de otros modelos
-        companies = Company.objects.all()
-        categories = Category.objects.all()
-        languages = Language.objects.all()
-        images = ImageProject.objects.all()
+        for project_data in projects_data:
+            # Buscar la compañía por nombre
+            company = Company.objects.filter(name=project_data['company']).first()
+            if not company:
+                self.stdout.write(self.style.WARNING(f'La compañía "{project_data["company"]}" no se encontró.'))
+                continue
 
-        if not (companies.exists() and categories.exists() and languages.exists() and images.exists()):
-            self.stdout.write(self.style.ERROR('Es necesario tener al menos una instancia de Company, Category, Language e ImageProject.'))
-            return
+            # Obtener los idiomas por su código (e.g., 'en', 'es')
+            languages = Language.objects.filter(abbreviation__in=project_data['languages'])
+            if not languages.exists():
+                self.stdout.write(self.style.WARNING(f'No se encontraron los idiomas {project_data["languages"]}.'))
+                continue
 
-        # Crear datos de ejemplo para proyectos
-        for i in range(5):  # Crea 5 proyectos de ejemplo
+            # Obtener las categorías por su nombre
+            categories = Category.objects.filter(name__in=project_data['categories'])
+            if not categories.exists():
+                self.stdout.write(self.style.WARNING(f'No se encontraron las categorías {project_data["categories"]}.'))
+                continue
+
+            # Obtener las imágenes por nombre de archivo
+            images = ImageProject.objects.filter(name__in=[os.path.splitext(img)[0] for img in project_data['images']])
+            if not images.exists():
+                self.stdout.write(self.style.WARNING(f'No se encontraron las imágenes {project_data["images"]}.'))
+                continue
+
+            # Crear el proyecto
             project = Project.objects.create(
-                title=f'Project {i + 1}',
-                url=f'https://www.example.com/project-{i + 1}',
-                description=f'This is a description for Project {i + 1}.',
-                company=random.choice(companies),
-                language=random.choice(languages),
+                title=project_data['title'],
+                url=project_data['url'],
+                description=project_data['description']['es'],  # O cambiar a 'en' según sea necesario
+                company=company,
             )
+            
+            project.language.set(languages)  # Asignar idiomas al proyecto
 
-            # Asignar categorías y imágenes de forma aleatoria
-            project.categories.set(random.sample(list(categories), k=2))  # Asigna 2 categorías al azar
-            project.images.set(random.sample(list(images), k=3))  # Asigna 3 imágenes al azar
-
+            # Asignar categorías y imágenes al proyecto
+            project.categories.set(categories)
+            project.images.set(images)
             project.save()
-            self.stdout.write(self.style.SUCCESS(f'Proyecto {project.title} creado.'))
+
+            self.stdout.write(self.style.SUCCESS(f'Proyecto "{project.title}" creado con éxito.'))
 
         self.stdout.write(self.style.SUCCESS('Seeding de proyectos completado.'))

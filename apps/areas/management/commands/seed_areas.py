@@ -6,9 +6,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         areas = [
-            {"title": "Frontend", "name": "Frontend Development", "logo": "fa-solid fa-code"},
-            {"title": "Backend", "name": "Backend Development", "logo": "fa-solid fa-server"},
-            {"title": "Database", "name": "Database Management", "logo": "fa-solid fa-database"},
+            {"title": "Frontend", "name": '{ "en": "Frontend Development", "es": "Desarrollo Frontend" }', "logo": "FaCss3Alt"},
+            {"title": "Backend", "name": '{ "en": "Backend Development", "es": "Desarrollo Backend" }', "logo": "FaAws"},
+            {"title": "Database", "name": '{ "en": "Database Management", "es": "Administracion BD" }', "logo": "FaDatabase"},
         ]
 
         for area_data in areas:

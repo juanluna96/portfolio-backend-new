@@ -10,29 +10,38 @@ class Command(BaseCommand):
         companies = [
             {
                 "name": "Datasistemas Web",
-                "position": "Web Developer FullStack JR",
-                "image": "datasistemas_web.png"
+                "position": '{ "en": "Web Developer FullStack JR", "es": "Desarrollador Web FullStack JR" }',
+                "image": "images/companies/DatasistemasWeb.png"
             },
             {
                 "name": "Konecta",
-                "position": "Analista de desarrollo",
-                "image": "konecta.png"
+                "position": '{ "en": "Development analyst", "es": "Analista de desarrollo" }',
+                "image": "images/companies/Konecta.png"
             },
             {
                 "name": "Habi",
-                "position": "Web Developer MID",
-                "image": "habi.png"
+                "position": '{ "en": "Web Developer MID", "es": "Desarrollador Web MID" }',
+                "image": "images/companies/Habi.png"
+            },
+            {
+                "name": "Personal",
+                "position": '{ "en": "FullStack Dev", "es": "Desarrollador FullStack" }',
+                "image": "images/companies/Personal.jpg"
             },
         ]
 
         for company_data in companies:
-            # Construir la ruta de la imagen a partir de MEDIA_ROOT
-            image_path = os.path.join(settings.MEDIA_ROOT, "company_images", company_data["image"])
+            # Comprobar si el archivo de imagen existe en la ruta esperada
+            full_image_path = os.path.join(settings.MEDIA_ROOT, company_data["image"])
+            if os.path.exists(full_image_path):
+                # Asignar el path relativo al campo `image`
+                Company.objects.create(
+                    name=company_data["name"],
+                    position=company_data["position"],
+                    image=company_data["image"]  # Asigna directamente el path relativo
+                )
+                self.stdout.write(self.style.SUCCESS(f'Successfully added company {company_data["name"]}'))
+            else:
+                self.stdout.write(self.style.ERROR(f'Image file "{full_image_path}" not found'))
 
-            Company.objects.create(
-                name=company_data["name"],
-                position=company_data["position"],
-                image=image_path
-            )
-
-        self.stdout.write(self.style.SUCCESS('Successfully seeded company data'))
+        self.stdout.write(self.style.SUCCESS('Seeding completed'))

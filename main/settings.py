@@ -31,10 +31,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5)7yhwgay0j=vy745bmtp4&xzctte-35#ez1)omszva9tz$$zu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    os.getenv('ALLOWED_HOSTS_1'),
+    os.getenv('ALLOWED_HOSTS_2'),
+    os.getenv('ALLOWED_BACKEND_HOST'),
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    f"https://{os.getenv('ALLOWED_BACKEND_HOST')}",
+]
 
 # Application definition
 
@@ -52,7 +60,10 @@ COMPONENTS_APPS = [
 DEPENDENCY_APPS = [
     'rest_framework',
     'coreapi',
-    'corsheaders'
+    'corsheaders',
+    'django_s3_storage',
+    'drf_yasg',
+    'storages'
 ]
 
 INSTALLED_APPS = [
@@ -61,11 +72,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
 ] + COMPONENTS_APPS + DEPENDENCY_APPS
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Debe estar al principio
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,12 +86,27 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True  # Permitir todos los orígenes
+
+# Especificar los encabezados permitidos para CORS
+CORS_ALLOWED_HEADERS = [
+    'ngrok-skip-browser-warning',  # Permitir el encabezado de ngrok
+    'accept',
+    'authorization',
+    'content-type',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_ALLOW_CREDENTIALS = True  # Si usas cookies o credenciales
+
 ROOT_URLCONF = 'main.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'main' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,8 +170,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = '/static'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -153,7 +182,12 @@ STATIC_ROOT = '/static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
 }
 
 
@@ -163,6 +197,35 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # URL a la que se accederán los archivos subidos
 MEDIA_URL = '/media/'
 
-CORS_ALLOWED_ORIGINS = [
-    os.getenv('ALLOWED_HOSTS')
-]
+
+# Elimina CORS_ALLOWED_ORIGINS si tienes CORS_ALLOW_ALL_ORIGINS = True
+# Si necesitas usar orígenes específicos, puedes configurarlos así:
+# CORS_ALLOWED_ORIGINS = [
+#     os.getenv('ALLOWED_HOSTS_1'),
+#     os.getenv('ALLOWED_HOSTS_2'),
+# ]
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if DEBUG is False:
+    
+    # CONFIGURACION PARA LOS ARCHIVOS ESTATICOS
+    
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+
+    YOUR_S3_BUCKET = os.getenv('AWS_STORAGE_BUCKET_NAME')
+
+    STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+    AWS_S3_BUCKET_NAME_STATIC = YOUR_S3_BUCKET
+
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % YOUR_S3_BUCKET
+    
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    
+    # CONFIGURACION PARA LOS ARCHIVOS MEDIA
+    DEFAULT_FILE_STORAGE = "django_s3_storage.storage.S3Storage"
+    AWS_S3_BUCKET_NAME = YOUR_S3_BUCKET
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"

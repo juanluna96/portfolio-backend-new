@@ -6,7 +6,7 @@ class Contact(models.Model):
     country = models.CharField(max_length=100)
     country_code = models.CharField(max_length=10)
     phone = models.CharField(max_length=20)
-    address = models.CharField(max_length=255)
+    address = models.CharField(max_length=255, blank=True)
     message = models.TextField()
     read = models.BooleanField(default=False)
     favorite = models.BooleanField(default=False)

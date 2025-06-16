@@ -1,31 +1,30 @@
-import coreapi
-from rest_framework.schemas import AutoSchema
+from drf_yasg import openapi
 
+# Define los parámetros manualmente
 
-class ProjectListSchema(AutoSchema):
-    def get_manual_fields(self, path, method):
-        extra_fields = [
-            coreapi.Field(
-                name='language',
-                required=True,
-                location='query',
-                description='The language abbreviation for filtering (e.g., "en").',
-                type='string'
-            ),
-            coreapi.Field(
-                name='search',
-                required=False,
-                location='query',
-                description='Search term to filter projects by description or title.',
-                type='string'
-            ),
-            coreapi.Field(
-                name='order',
-                required=False,
-                location='query',
-                description='Order by title, "asc" for ascending or "desc" for descending.',
-                type='string'
-            )
-        ]
-        manual_fields = super().get_manual_fields(path, method)
-        return manual_fields + extra_fields
+language_param = openapi.Parameter(
+    name='language',
+    in_=openapi.IN_QUERY,
+    description='The language abbreviation for filtering (e.g., "en").',
+    required=True,
+    type=openapi.TYPE_STRING
+)
+
+search_param = openapi.Parameter(
+    name='search',
+    in_=openapi.IN_QUERY,
+    description='Search term to filter projects by description or title.',
+    required=False,
+    type=openapi.TYPE_STRING
+)
+
+order_param = openapi.Parameter(
+    name='order',
+    in_=openapi.IN_QUERY,
+    description='Order by title, "asc" for ascending or "desc" for descending.',
+    required=False,
+    type=openapi.TYPE_STRING
+)
+
+# Agrupamos los parámetros en una lista (opcionalmente)
+project_list_params = [language_param, search_param, order_param]

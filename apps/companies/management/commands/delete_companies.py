@@ -5,7 +5,7 @@ class Command(BaseCommand):
     help = 'Delete seeded data for the Company model'
 
     def handle(self, *args, **kwargs):
-        company_names = ["Datasistemas Web", "Konecta", "Habi"]
+        company_names = ["Datasistemas Web", "Konecta", "Habi", "Personal"]
 
         deleted_count, _ = Company.objects.filter(name__in=company_names).delete()
 

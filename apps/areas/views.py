@@ -12,6 +12,6 @@ class AreaWithCategoriesProjectsView(APIView):
         areas = Area.objects.prefetch_related('categories__projects').all()
 
         # Serializamos las áreas, pasándole el 'language_code' al contexto de los serializers
-        serializer = AreaSerializer(areas, many=True, context={'language_code': language_code})
+        serializer = AreaSerializer(areas, many=True, context={'language_code': language_code, 'request': request})
 
         return Response({"areas": serializer.data}, status=status.HTTP_200_OK)

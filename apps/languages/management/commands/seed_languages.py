@@ -6,8 +6,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         languages = [
-            {"name": "Español", "description": "spanish", "abbreviation": "es", "flag": "es"},
-            {"name": "Inglés", "description": "english", "abbreviation": "en", "flag": "gb"},
+            {"name": "Español", "description": "spanish", "abbreviation": "es", "flag": "ES"},
+            {"name": "Inglés", "description": "english", "abbreviation": "en", "flag": "US"},
         ]
 
         for lang_data in languages:

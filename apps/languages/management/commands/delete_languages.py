@@ -5,7 +5,7 @@ class Command(BaseCommand):
     help = 'Delete seeded data for the Language model'
 
     def handle(self, *args, **kwargs):
-        language_names = ["Español", "Ingles"]
+        language_names = ["Español", "Inglés"]
 
         deleted_count, _ = Language.objects.filter(name__in=language_names).delete()
 

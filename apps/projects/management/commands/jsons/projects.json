@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Datasistemas Web",
+    "url": "https://datasistemasweb.com/",
+    "description": {
+        "en": "<p>It is an online platform that offers <strong>educational institutions</strong> a comprehensive set of solutions for managing <strong>academic information</strong>. It focuses on optimizing processes such as <strong>enrollment</strong>, <strong>planning</strong>, <strong>evaluation</strong>, and <strong>student promotion</strong>, fully aligned with the guidelines established in the <strong>Unified Regulatory Decree for the Education Sector No. 1075 of 2015</strong>.</p>",
+        "es": "<p>Es una plataforma en línea que proporciona a las <strong>instituciones educativas</strong> un conjunto integral de soluciones para la gestión de la <strong>información académica</strong>. Está enfocada en optimizar los procesos de <strong>matrícula</strong>, <strong>planeación</strong>, <strong>evaluación</strong> y <strong>promoción de los estudiantes</strong>, cumpliendo plenamente con los lineamientos establecidos en el <strong>Decreto Único Reglamentario del Sector Educación No. 1075 de 2015</strong>.</p>"
+    },
+    "company": "Datasistemas Web",
+    "categories": ["React", "PHP", "Laravel", "MySQL"],
+    "languages": ["en", "es"],
+    "images": ["Datasistemas.png", "Datasistemas_1.png", "Datasistemas_2.png"]
+  },
+  {
+    "title": "Konecta",
+    "url": "https://www.konecta-group.com/",
+    "description": {
+        "en": "<p>I worked on <strong>Jarvis</strong>, a virtual assistant that automates repetitive tasks, allowing the team to focus on <strong>human interactions</strong> and deliver superior service. I also contributed to <strong>Cosmos</strong>, a communication channel by Konecta that improves the distribution of <strong>guidelines</strong> and <strong>protocols</strong> to enhance team efficiency.</p>",
+        "es": "<p>Participé en el desarrollo de <strong>Jarvis</strong>, un asistente virtual que automatiza tareas repetitivas, permitiendo al equipo centrarse en <strong>interacciones humanas</strong> y ofrecer un servicio superior. También trabajé en <strong>Cosmos</strong>, un canal de comunicación de Konecta que mejora la difusión de <strong>normativas</strong> y <strong>guías</strong> para optimizar el trabajo del equipo.</p>"
+    },
+    "company": "Konecta",
+    "categories": ["Angular", "PHP", "CodeIgniter", "MySQL", "MongoDB", "Node.js", "Javascript"],
+    "languages": ["en", "es"],
+    "images": ["Konecta.png"]
+  },
+  {
+    "title": "Propiedades.com",
+    "url": "https://www.propiedades.com/",
+    "description": {
+        "en": "<p><strong>Propiedades.com</strong> is a modern company with a digital platform free of <strong>advertisements</strong> and extra content, offering added value to the property <strong>buying</strong>, <strong>selling</strong>, or <strong>renting</strong> process. The platform focuses on providing <strong>useful services</strong> that simplify important decision-making when listing or finding properties for sale or rent.</p>",
+        "es": "<p><strong>Propiedades.com</strong> es una empresa moderna con una plataforma digital libre de <strong>publicidad</strong> y contenidos adicionales, que aporta valor al proceso de <strong>compra-venta</strong> o <strong>renta</strong> de propiedades. La plataforma está diseñada con un enfoque en <strong>servicios útiles</strong> que facilitan la toma de decisiones importantes al ofrecer o buscar propiedades en venta o renta.</p>"
+    },
+    "company": "Habi",
+    "categories": ["React", "Next.js", "PHP", "MySQL", "MongoDB", "Python", "Javascript"],
+    "languages": ["en", "es"],
+    "images": ["Propiedades.png", "Propiedades_1.png", "Propiedades_2.png"]
+  },
+  {
+    "title": "Weather App",
+    "url": "https://weatherapp-jdl.netlify.app/",
+    "description": {
+        "en": "<p>I developed a <strong>weather application</strong> that provides detailed weather data, including <strong>wind speed</strong>, <strong>humidity</strong>, <strong>atmospheric pressure</strong>, and <strong>visibility</strong>. The app displays temperatures in both <strong>Fahrenheit</strong> and <strong>Celsius</strong> and allows users to search for weather conditions in various <strong>cities</strong> and <strong>locations</strong>.</p>",
+        "es": "<p>Desarrollé una <strong>aplicación de clima</strong> que ofrece datos meteorológicos detallados, como <strong>velocidad del viento</strong>, <strong>humedad</strong>, <strong>presión atmosférica</strong> y <strong>visibilidad</strong>. La aplicación muestra las temperaturas en <strong>Fahrenheit</strong> y <strong>Celsius</strong>, y permite buscar las condiciones meteorológicas en diferentes <strong>ciudades</strong> y <strong>localidades</strong>.</p>"
+    },
+    "company": "Personal",
+    "categories": ["React", "Django", "Javascript", "PostgresSQL"],
+    "languages": ["en", "es"],
+    "images": ["WeatherApp.png", "WeatherApp_1.png"]
+  }
+]

@@ -24,7 +24,7 @@ class Project(models.Model):
     # Categories is a field that connects to category information
     categories = models.ManyToManyField(Category, related_name='projects')
     # Languages is a field that connects to language information
-    language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True, blank=True)
+    language = models.ManyToManyField(Language,related_name='projects', blank=True)
     # Images
     images = models.ManyToManyField(ImageProject, related_name='projects', blank=True)
     # Dates from creation and modification
