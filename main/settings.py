@@ -14,11 +14,19 @@ from pathlib import Path
 import os
 import environ
 
+# Inicializar el entorno
 env = environ.Env()
 
+# Leer el archivo .env
 env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+if os.path.exists(env_file):
+    env.read_env(env_file)
 
-environ.Env.read_env(env_file)
+# Verificar si estamos en producción
+if os.getenv('STAGE') == 'prod':
+    env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env.production')
+    if os.path.exists(env_file):
+        env.read_env(env_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,15 +133,14 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-    }
+    'default': dj_database_url.parse(
+        'postgresql://postgres_user:qugnf62SkxC1Geu3VBZeuNH4ul8fUWae@dpg-d17mu03uibrs73fsnrt0-a.oregon-postgres.render.com/portfolio_azmj',
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 # Password validation

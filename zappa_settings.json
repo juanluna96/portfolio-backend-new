@@ -15,6 +15,12 @@
         "project_name": "portfolio-backend",
         "runtime": "python3.9",
         "s3_bucket": "zappa-guf0tvcvq",
+        "vpc_config": {
+            "SubnetIds": [],
+            "SecurityGroupIds": []
+        },
+        "timeout_seconds": 300,
+        "keep_warm_expression": "rate(4 minutes)",
         "environment_variables": {
             "STAGE": "dev"
         }
