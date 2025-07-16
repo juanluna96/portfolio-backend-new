@@ -137,7 +137,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://postgres_user:qugnf62SkxC1Geu3VBZeuNH4ul8fUWae@dpg-d17mu03uibrs73fsnrt0-a.oregon-postgres.render.com/portfolio_azmj',
+        f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}",
         conn_max_age=600,
         ssl_require=True
     )
