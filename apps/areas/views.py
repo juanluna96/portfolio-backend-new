@@ -17,11 +17,19 @@ class AreaWithCategoriesProjectsView(APIView):
             .select_related('company')
             .prefetch_related('language', 'images', 'descriptions')
         )
-        categories_qs = Category.objects.order_by('name').prefetch_related(
-            Prefetch('projects', queryset=projects_qs)
+        # Only categories that have at least one project
+        categories_qs = (
+            Category.objects.filter(projects__isnull=False)
+            .distinct()
+            .order_by('name')
+            .prefetch_related(Prefetch('projects', queryset=projects_qs))
         )
-        areas = Area.objects.order_by('title').prefetch_related(
-            Prefetch('categories', queryset=categories_qs)
+        # Only areas that have at least one category with projects
+        areas = (
+            Area.objects.filter(categories__projects__isnull=False)
+            .distinct()
+            .order_by('title')
+            .prefetch_related(Prefetch('categories', queryset=categories_qs))
         )
 
         serializer = AreaSerializer(areas, many=True, context={'language_code': language_code, 'request': request})
