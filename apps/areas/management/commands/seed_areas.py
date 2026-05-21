@@ -6,8 +6,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         areas = [
-            {"title": "Frontend", "name": '{ "en": "Frontend Development", "es": "Desarrollo Frontend" }', "logo": "FaCss3Alt"},
-            {"title": "Backend", "name": '{ "en": "Backend Development", "es": "Desarrollo Backend" }', "logo": "FaAws"},
+            {"title": "Frontend", "name": '{ "en": "Frontend Development", "es": "Desarrollo Frontend" }', "logo": "FaReact"},
+            {"title": "Backend", "name": '{ "en": "Backend Development", "es": "Desarrollo Backend" }', "logo": "FaServer"},
             {"title": "Database", "name": '{ "en": "Database Management", "es": "Administracion BD" }', "logo": "FaDatabase"},
         ]
 
