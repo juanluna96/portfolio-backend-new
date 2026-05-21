@@ -20,14 +20,18 @@ class Command(BaseCommand):
             area_instance = Area.objects.filter(title=area_title).first()
 
             if area_instance:
-                Category.objects.create(
+                _, created = Category.objects.get_or_create(
                     name=category_data["name"],
-                    color_text=category_data["color_text"],
-                    color_bg=category_data["color_bg"],
-                    logo=category_data["logo"],
                     area_id=area_instance,
-                    image=os.path.join("images/categories/", category_data["image"]),
-                    imageBig=os.path.join("images/categories/", category_data["imageBig"])
+                    defaults={
+                        "color_text": category_data["color_text"],
+                        "color_bg": category_data["color_bg"],
+                        "logo": category_data["logo"],
+                        "image": os.path.join("images/categories/", category_data["image"]),
+                        "imageBig": os.path.join("images/categories/", category_data["imageBig"]),
+                    }
                 )
+                if not created:
+                    self.stdout.write(self.style.WARNING(f'Category "{category_data["name"]}" already exists, skipped.'))
 
         self.stdout.write(self.style.SUCCESS('Successfully seeded categories from JSON'))

@@ -34,13 +34,14 @@ class Command(BaseCommand):
             # Comprobar si el archivo de imagen existe en la ruta esperada
             full_image_path = os.path.join(settings.MEDIA_ROOT, company_data["image"])
             if os.path.exists(full_image_path):
-                # Asignar el path relativo al campo `image`
-                Company.objects.create(
+                _, created = Company.objects.get_or_create(
                     name=company_data["name"],
-                    position=company_data["position"],
-                    image=company_data["image"]  # Asigna directamente el path relativo
+                    defaults={"position": company_data["position"], "image": company_data["image"]},
                 )
-                self.stdout.write(self.style.SUCCESS(f'Successfully added company {company_data["name"]}'))
+                if created:
+                    self.stdout.write(self.style.SUCCESS(f'Company "{company_data["name"]}" created.'))
+                else:
+                    self.stdout.write(self.style.WARNING(f'Company "{company_data["name"]}" already exists, skipped.'))
             else:
                 self.stdout.write(self.style.ERROR(f'Image file "{full_image_path}" not found'))
 

@@ -17,12 +17,14 @@ class Command(BaseCommand):
         # Iterar sobre todos los archivos en el directorio
         for filename in os.listdir(directory):
             if filename.endswith('.png'):
-                file_path = os.path.join(directory, filename)
-
-                # Extraer el nombre del archivo sin la extensión
                 name = os.path.splitext(filename)[0]
 
-                image_instance = ImageProject(name=name, image=f'images/projects/{filename}')
-                image_instance.save()
+                _, created = ImageProject.objects.get_or_create(
+                    name=name,
+                    defaults={'image': f'images/projects/{filename}'},
+                )
 
-                self.stdout.write(self.style.SUCCESS(f'Imagen "{name}" procesada y almacenada.'))
+                if created:
+                    self.stdout.write(self.style.SUCCESS(f'Imagen "{name}" creada.'))
+                else:
+                    self.stdout.write(self.style.WARNING(f'Imagen "{name}" ya existe, omitida.'))

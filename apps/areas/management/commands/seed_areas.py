@@ -12,6 +12,10 @@ class Command(BaseCommand):
         ]
 
         for area_data in areas:
-            Area.objects.create(**area_data)
+            _, created = Area.objects.get_or_create(title=area_data['title'], defaults=area_data)
+            if created:
+                self.stdout.write(self.style.SUCCESS(f'Area "{area_data["title"]}" created.'))
+            else:
+                self.stdout.write(self.style.WARNING(f'Area "{area_data["title"]}" already exists, skipped.'))
 
         self.stdout.write(self.style.SUCCESS('Successfully seeded areas'))

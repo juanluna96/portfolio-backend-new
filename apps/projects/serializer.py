@@ -23,20 +23,47 @@ class ProjectSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         request = self.context.get('request')
         if request:
-            # Construir la URL completa con el esquema y el dominio
-            return [request.build_absolute_uri(image.image.url) for image in obj.images.all()]
+            seen = set()
+            result = []
+            for image in obj.images.all():
+                url = request.build_absolute_uri(image.image.url)
+                if url not in seen:
+                    seen.add(url)
+                    result.append(url)
+            return result
         return []
-    
+
     def get_company(self, obj):
         return obj.company.name
-    
+
     def get_language(self, obj):
-        return [language.abbreviation for language in obj.language.all()]
-    
+        seen = set()
+        result = []
+        for language in obj.language.all():
+            if language.abbreviation not in seen:
+                seen.add(language.abbreviation)
+                result.append(language.abbreviation)
+        return result
+
     def get_categories(self, obj):
         request = self.context.get('request')
-        categories = obj.categories.all()
-        return [{'id':category.id,'name': category.name, 'logo': category.logo, 'color_bg': category.color_bg, 'color_text': category.color_text, 'images': {'small': request.build_absolute_uri(category.image.url),'big': request.build_absolute_uri(category.imageBig.url)}} for category in categories]
+        seen = set()
+        result = []
+        for category in obj.categories.all().order_by('name'):
+            if category.id not in seen:
+                seen.add(category.id)
+                result.append({
+                    'id': category.id,
+                    'name': category.name,
+                    'logo': category.logo,
+                    'color_bg': category.color_bg,
+                    'color_text': category.color_text,
+                    'images': {
+                        'small': request.build_absolute_uri(category.image.url),
+                        'big': request.build_absolute_uri(category.imageBig.url),
+                    },
+                })
+        return result
 
 class ProjectImageSerializer(serializers.ModelSerializer):
     class Meta:

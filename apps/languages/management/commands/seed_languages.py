@@ -11,6 +11,8 @@ class Command(BaseCommand):
         ]
 
         for lang_data in languages:
-            Language.objects.create(**lang_data)
+            _, created = Language.objects.get_or_create(abbreviation=lang_data['abbreviation'], defaults=lang_data)
+            if not created:
+                self.stdout.write(self.style.WARNING(f'Language "{lang_data["abbreviation"]}" already exists, skipped.'))
 
         self.stdout.write(self.style.SUCCESS('Successfully seeded languages'))
