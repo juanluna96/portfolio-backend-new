@@ -17,16 +17,28 @@ import environ
 # Inicializar el entorno
 env = environ.Env()
 
-# Leer el archivo .env
-env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
-if os.path.exists(env_file):
-    env.read_env(env_file)
+# STAGE no definido = local/docker, STAGE=dev|prod = Zappa
+stage = os.getenv('STAGE')
+BASE_SETTINGS_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Verificar si estamos en producción
-if os.getenv('STAGE') == 'prod':
-    env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env.production')
-    if os.path.exists(env_file):
-        env.read_env(env_file)
+if stage is None:
+    # Local/Docker: cargar .env.development primero para que sus valores tengan prioridad
+    # (docker-compose ya fija DB_HOST=db y DJANGO_DEBUG=True en su sección environment,
+    #  por lo que setdefault no los sobreescribe)
+    dev_file = os.path.join(BASE_SETTINGS_DIR, '.env.development')
+    if os.path.exists(dev_file):
+        env.read_env(dev_file)
+
+# Cargar .env base para cualquier variable faltante
+base_file = os.path.join(BASE_SETTINGS_DIR, '.env')
+if os.path.exists(base_file):
+    env.read_env(base_file)
+
+# En Zappa cargar también .env.production
+if stage:
+    prod_file = os.path.join(BASE_SETTINGS_DIR, '.env.production')
+    if os.path.exists(prod_file):
+        env.read_env(prod_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

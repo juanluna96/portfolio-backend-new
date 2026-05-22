@@ -24,5 +24,31 @@
         "environment_variables": {
             "STAGE": "dev"
         }
+    },
+    "prod": {
+        "aws_region": "us-east-1",
+        "django_settings": "main.settings",
+        "include": ["media/*", "create_superuser.py"],
+        "exclude": [
+            "boto3",
+            "dateutil",
+            "botocore",
+            "s3transfer",
+            "concurrent"
+        ],
+        "serve_static_files": true,
+        "profile_name": "serverless",
+        "project_name": "portfolio-backend",
+        "runtime": "python3.9",
+        "s3_bucket": "zappa-guf0tvcvq",
+        "vpc_config": {
+            "SubnetIds": [],
+            "SecurityGroupIds": []
+        },
+        "timeout_seconds": 300,
+        "keep_warm_expression": "rate(4 minutes)",
+        "environment_variables": {
+            "STAGE": "prod"
+        }
     }
 }
