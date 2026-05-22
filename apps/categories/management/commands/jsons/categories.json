@@ -167,5 +167,109 @@
             "en": ["CTE Queries", "JSONB Support", "Partitioning", "PL/pgSQL", "Full-Text Search"],
             "es": ["Consultas CTE", "Soporte JSONB", "Particionamiento", "PL/pgSQL", "Búsqueda de texto completo"]
         }
+    },
+    {
+        "name": "Unity",
+        "color_text": "#000000",
+        "color_bg": "#FFFFFF",
+        "logo": "SiUnity",
+        "area": "Video Games",
+        "image": "unity.png",
+        "imageBig": "unity_big.png",
+        "descriptions": {
+            "en": ["C# Scripting", "Physics Engine", "2D & 3D Games", "Unity Editor", "Asset Store"],
+            "es": ["Scripting en C#", "Motor de físicas", "Juegos 2D y 3D", "Editor de Unity", "Asset Store"]
+        }
+    },
+    {
+        "name": "Godot",
+        "color_text": "#478CBF",
+        "color_bg": "#FFFFFF",
+        "logo": "SiGodotengine",
+        "area": "Video Games",
+        "image": "godot.png",
+        "imageBig": "godot_big.png",
+        "descriptions": {
+            "en": ["GDScript", "Node System", "2D & 3D Games", "Scene Editor", "Open Source"],
+            "es": ["GDScript", "Sistema de nodos", "Juegos 2D y 3D", "Editor de escenas", "Código abierto"]
+        }
+    },
+    {
+        "name": "Phaser",
+        "color_text": "#E2431E",
+        "color_bg": "#FFFFFF",
+        "logo": "FaJs",
+        "area": "Video Games",
+        "image": "phaser.png",
+        "imageBig": "phaser_big.png",
+        "descriptions": {
+            "en": ["2D Games", "Arcade Physics", "Sprite Animations", "Tilemaps", "JavaScript/TypeScript"],
+            "es": ["Juegos 2D", "Físicas arcade", "Animaciones de sprites", "Tilemaps", "JavaScript/TypeScript"]
+        }
+    },
+    {
+        "name": "Three.js",
+        "color_text": "#000000",
+        "color_bg": "#FFFFFF",
+        "logo": "SiThreedotjs",
+        "area": "Video Games",
+        "image": "threejs.png",
+        "imageBig": "threejs_big.png",
+        "descriptions": {
+            "en": ["3D Rendering", "WebGL", "Scene Graph", "Shaders", "JavaScript"],
+            "es": ["Renderizado 3D", "WebGL", "Grafo de escena", "Shaders", "JavaScript"]
+        }
+    },
+    {
+        "name": "TensorFlow",
+        "color_text": "#FF6F00",
+        "color_bg": "#FFFFFF",
+        "logo": "SiTensorflow",
+        "area": "AI",
+        "image": "tensorflow.png",
+        "imageBig": "tensorflow_big.png",
+        "descriptions": {
+            "en": ["Neural Networks", "Model Training", "TensorFlow Lite", "Keras API", "Deep Learning"],
+            "es": ["Redes neuronales", "Entrenamiento de modelos", "TensorFlow Lite", "API Keras", "Aprendizaje profundo"]
+        }
+    },
+    {
+        "name": "PyTorch",
+        "color_text": "#EE4C2C",
+        "color_bg": "#FFFFFF",
+        "logo": "SiPytorch",
+        "area": "AI",
+        "image": "pytorch.png",
+        "imageBig": "pytorch_big.png",
+        "descriptions": {
+            "en": ["Dynamic Graphs", "Autograd", "Computer Vision", "NLP Models", "Deep Learning"],
+            "es": ["Grafos dinámicos", "Autograd", "Visión por computador", "Modelos NLP", "Aprendizaje profundo"]
+        }
+    },
+    {
+        "name": "OpenAI",
+        "color_text": "#00A67E",
+        "color_bg": "#FFFFFF",
+        "logo": "SiOpenai",
+        "area": "AI",
+        "image": "openai.png",
+        "imageBig": "openai_big.png",
+        "descriptions": {
+            "en": ["GPT Models", "API Integration", "Prompt Engineering", "Embeddings", "Assistants API"],
+            "es": ["Modelos GPT", "Integración de API", "Ingeniería de prompts", "Embeddings", "API de asistentes"]
+        }
+    },
+    {
+        "name": "LangChain",
+        "color_text": "#1C3C3C",
+        "color_bg": "#FFFFFF",
+        "logo": "",
+        "area": "AI",
+        "image": "langchain.png",
+        "imageBig": "langchain_big.png",
+        "descriptions": {
+            "en": ["LLM Chains", "Agents", "Vector Stores", "RAG Pipelines", "Memory Management"],
+            "es": ["Cadenas LLM", "Agentes", "Almacenes vectoriales", "Pipelines RAG", "Gestión de memoria"]
+        }
     }
 ]
