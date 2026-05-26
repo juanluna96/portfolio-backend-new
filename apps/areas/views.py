@@ -35,4 +35,6 @@ class AreaWithCategoriesProjectsView(APIView):
 
         serializer = AreaSerializer(areas, many=True, context={'language_code': language_code, 'request': request})
 
-        return Response({"areas": serializer.data}, status=status.HTTP_200_OK)
+        response = Response({"areas": serializer.data}, status=status.HTTP_200_OK)
+        response['Cache-Control'] = 'public, max-age=300'
+        return response

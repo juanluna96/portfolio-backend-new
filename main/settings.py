@@ -96,9 +96,11 @@ INSTALLED_APPS = [
 ] + COMPONENTS_APPS + DEPENDENCY_APPS
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Debe estar al principio
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
