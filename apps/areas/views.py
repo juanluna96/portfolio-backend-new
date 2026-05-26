@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .models import Area
 from .serializers import AreaSerializer
 from rest_framework import status
-from django.db.models import Prefetch
+from django.db.models import Count, Prefetch
 from apps.categories.models import Category
 from apps.projects.models import Project
 
@@ -17,11 +17,12 @@ class AreaWithCategoriesProjectsView(APIView):
             .select_related('company')
             .prefetch_related('language', 'images', 'descriptions')
         )
-        # Only categories that have at least one project
+        # Only categories that have at least one project, ordered by project count desc
         categories_qs = (
             Category.objects.filter(projects__isnull=False)
             .distinct()
-            .order_by('name')
+            .annotate(project_count=Count('projects'))
+            .order_by('-project_count', 'name')
             .prefetch_related(Prefetch('projects', queryset=projects_qs))
         )
         # Only areas that have at least one category with projects
