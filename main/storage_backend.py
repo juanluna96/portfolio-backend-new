@@ -11,6 +11,19 @@ else:
     from django.core.files.storage import FileSystemStorage
 
     class MediaStorage(FileSystemStorage):
-        pass
+        """
+        En desarrollo: fuerza revalidación con el servidor en cada petición
+        (no-cache) para que imágenes reemplazadas con el mismo nombre se
+        reflejen inmediatamente sin necesidad de hard-refresh.
+        """
+        def url(self, name):
+            url = super().url(name)
+            # Añade timestamp del archivo como query param para busting de caché
+            import time, os
+            try:
+                mtime = int(os.path.getmtime(self.path(name)))
+            except (OSError, NotImplementedError):
+                mtime = int(time.time())
+            return f"{url}?v={mtime}"
 
 media_storage = MediaStorage()

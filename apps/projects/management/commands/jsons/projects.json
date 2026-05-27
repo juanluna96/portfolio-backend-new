@@ -49,7 +49,7 @@
   },
   {
     "title": "Crossy Road",
-    "url": "",
+    "url": "https://jdlc-crossy-road.netlify.app/",
     "description": {
         "en": "<p>A <strong>Crossy Road</strong> clone built with <strong>JavaScript</strong> and <strong>Three.js</strong>. The player controls a character crossing an endless road full of moving vehicles and obstacles, avoiding getting hit.</p>",
         "es": "<p>Un clon de <strong>Crossy Road</strong> desarrollado con <strong>JavaScript</strong> y <strong>Three.js</strong>. El jugador controla un personaje que cruza una carretera interminable llena de vehículos y obstáculos en movimiento.</p>"
@@ -61,7 +61,7 @@
   },
   {
     "title": "Pokemon Type Game",
-    "url": "",
+    "url": "https://globalmon.netlify.app/",
     "description": {
         "en": "<p>A <strong>Pokémon-style turn-based battle game</strong> built with <strong>JavaScript</strong> and <strong>Phaser</strong>. Features type matchups, animated sprites, and classic RPG combat mechanics inspired by the original Game Boy titles.</p>",
         "es": "<p>Un juego de <strong>batallas por turnos estilo Pokémon</strong> desarrollado con <strong>JavaScript</strong> y <strong>Phaser</strong>. Incluye ventajas de tipo, sprites animados y mecánicas de combate RPG clásicas inspiradas en los títulos originales de Game Boy.</p>"
@@ -73,7 +73,7 @@
   },
   {
     "title": "Tiny Sword",
-    "url": "",
+    "url": "https://juanluna.itch.io/tiny-sword",
     "description": {
         "en": "<p><strong>Tiny Sword</strong> is a <strong>2D action game</strong> built in <strong>Unity</strong>, featuring pixel-art visuals, melee combat, and wave-based enemy encounters. Players battle through dungeons wielding swords against hordes of enemies.</p>",
         "es": "<p><strong>Tiny Sword</strong> es un <strong>juego de acción 2D</strong> desarrollado en <strong>Unity</strong> con gráficos pixel-art, combate cuerpo a cuerpo y oleadas de enemigos. Los jugadores atraviesan mazmorras blandiendo espadas contra hordas de enemigos.</p>"
@@ -85,7 +85,7 @@
   },
   {
     "title": "Arklone",
-    "url": "",
+    "url": "https://juanluna.itch.io/arklone",
     "description": {
         "en": "<p><strong>Arklone</strong> is a <strong>2D arcade game</strong> developed in <strong>Unity</strong>, inspired by classic Arkanoid. The player controls a paddle to bounce a ball and break blocks across multiple levels with increasing difficulty.</p>",
         "es": "<p><strong>Arklone</strong> es un <strong>juego arcade 2D</strong> desarrollado en <strong>Unity</strong>, inspirado en el clásico Arkanoid. El jugador controla una paleta para rebotar una pelota y romper bloques en niveles de dificultad creciente.</p>"
@@ -97,7 +97,7 @@
   },
   {
     "title": "Flight Dash",
-    "url": "",
+    "url": "https://juanluna.itch.io/flight-dash",
     "description": {
         "en": "<p><strong>Flight Dash</strong> is an <strong>endless runner game</strong> built in <strong>Unity</strong> where the player pilots an aircraft dodging obstacles at increasing speeds. Features procedurally generated environments and a global leaderboard.</p>",
         "es": "<p><strong>Flight Dash</strong> es un <strong>juego de runner infinito</strong> desarrollado en <strong>Unity</strong> donde el jugador pilota una aeronave esquivando obstáculos a velocidades crecientes. Incluye entornos generados proceduralmente y tabla de clasificación global.</p>"
