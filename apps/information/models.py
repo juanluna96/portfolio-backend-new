@@ -9,6 +9,8 @@ class Biography(models.Model):
     phone_2 = models.CharField(max_length=15, blank=True)
     email_1 = models.EmailField(max_length=255, unique=True)
     email_2 = models.EmailField(max_length=255, blank=True)
+    github = models.URLField(max_length=255, blank=True)
+    linkedin = models.URLField(max_length=255, blank=True)
 
     def __str__(self):
         return self.email_1

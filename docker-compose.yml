@@ -14,8 +14,6 @@ services:
   web:
     build: .
     command: /bin/sh /code/scripts/migrate_db.sh
-    volumes:
-      - .:/code
     ports:
       - "8000:8000"
     environment:
