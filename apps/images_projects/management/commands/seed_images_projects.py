@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
         # Iterar sobre todos los archivos en el directorio
         for filename in os.listdir(directory):
-            if filename.endswith('.png'):
+            if filename.endswith(('.png', '.jpg', '.jpeg')):
                 name = os.path.splitext(filename)[0]
 
                 _, created = ImageProject.objects.get_or_create(

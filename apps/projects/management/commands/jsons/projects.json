@@ -9,7 +9,7 @@
     "company": "Datasistemas Web",
     "categories": ["React", "PHP", "Laravel", "MySQL"],
     "languages": ["en", "es"],
-    "images": ["Datasistemas.png", "Datasistemas_1.png", "Datasistemas_2.png"]
+    "images": ["Datasistemas.jpg", "Datasistemas_1.jpg", "Datasistemas_2.jpg"]
   },
   {
     "title": "Konecta",
@@ -21,7 +21,7 @@
     "company": "Konecta",
     "categories": ["Angular", "PHP", "CodeIgniter", "MySQL", "MongoDB", "Node.js", "Javascript"],
     "languages": ["en", "es"],
-    "images": ["Konecta.png"]
+    "images": ["Konecta.jpg"]
   },
   {
     "title": "Propiedades.com",
@@ -33,7 +33,7 @@
     "company": "Habi",
     "categories": ["React", "Next.js", "PHP", "MySQL", "MongoDB", "Python", "Javascript"],
     "languages": ["en", "es"],
-    "images": ["Propiedades.png", "Propiedades_1.png", "Propiedades_2.png"]
+    "images": ["Propiedades.jpg", "Propiedades_1.jpg", "Propiedades_2.jpg"]
   },
   {
     "title": "Weather App",
@@ -45,7 +45,7 @@
     "company": "Personal",
     "categories": ["React", "Django", "Javascript", "PostgresSQL"],
     "languages": ["en", "es"],
-    "images": ["WeatherApp.png", "WeatherApp_1.png"]
+    "images": ["WeatherApp.jpg", "WeatherApp_1.jpg"]
   },
   {
     "title": "Crossy Road",
@@ -57,7 +57,7 @@
     "company": "Personal",
     "categories": ["Three.js"],
     "languages": ["en", "es"],
-    "images": ["CrossyRoad.png"]
+    "images": ["CrossyRoad.jpg"]
   },
   {
     "title": "Pokemon Type Game",
@@ -69,7 +69,7 @@
     "company": "Personal",
     "categories": ["Phaser"],
     "languages": ["en", "es"],
-    "images": ["PokemonTypeGame.png"]
+    "images": ["PokemonTypeGame.jpg"]
   },
   {
     "title": "Tiny Sword",
@@ -81,7 +81,7 @@
     "company": "Personal",
     "categories": ["Unity"],
     "languages": ["en", "es"],
-    "images": ["TinySword.png"]
+    "images": ["TinySword.jpg"]
   },
   {
     "title": "Arklone",
@@ -93,7 +93,7 @@
     "company": "Personal",
     "categories": ["Unity"],
     "languages": ["en", "es"],
-    "images": ["Arklone.png"]
+    "images": ["Arklone.jpg"]
   },
   {
     "title": "Flight Dash",
@@ -105,6 +105,6 @@
     "company": "Personal",
     "categories": ["Unity"],
     "languages": ["en", "es"],
-    "images": ["FlightDash.png"]
+    "images": ["FlightDash.jpg"]
   }
 ]
