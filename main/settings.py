@@ -108,7 +108,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True  # Permitir todos los orígenes
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+    if origin.strip()
+]
 
 # Especificar los encabezados permitidos para CORS
 CORS_ALLOWED_HEADERS = [
@@ -218,13 +224,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # URL a la que se accederán los archivos subidos
 MEDIA_URL = '/media/'
 
-
-# Elimina CORS_ALLOWED_ORIGINS si tienes CORS_ALLOW_ALL_ORIGINS = True
-# Si necesitas usar orígenes específicos, puedes configurarlos así:
-# CORS_ALLOWED_ORIGINS = [
-#     os.getenv('ALLOWED_HOSTS_1'),
-#     os.getenv('ALLOWED_HOSTS_2'),
-# ]
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
